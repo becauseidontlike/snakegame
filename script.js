@@ -1,6 +1,9 @@
 "use strict";
 
 const board = document.getElementById("game-board");
+const instruction = document.getElementById("instruction");
+const logo = document.getElementById("logo");
+
 const gridSize = 20;
 let snake = [{ x: 10, y: 10 }];
 let food = generateFood();
@@ -84,4 +87,37 @@ function move() {
 
 function startGame() {
   gameStarted = true;
+  instruction.style.display = "none";
+  logo.style.display = "none";
+  gameInterval = setInterval(() => {
+    move();
+    //checkCollision();
+    draw();
+  }, gameSpeedDelay);
 }
+
+function handleKeyPress(event) {
+  if (
+    (!gameStarted && event.code === "Space") ||
+    (!gameStarted && event.key === " ")
+  ) {
+    startGame();
+  } else {
+    switch (event.key) {
+      case "ArrowUp":
+        direction = "up";
+        break;
+      case "ArrowDown":
+        direction = "down";
+        break;
+      case "ArrowLeft":
+        direction = "left";
+        break;
+      case "ArrowRight":
+        direction = "right";
+        break;
+    }
+  }
+}
+
+document.addEventListener("keydown", handleKeyPress);
