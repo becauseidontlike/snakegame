@@ -4,10 +4,12 @@ const board = document.getElementById("game-board");
 const instruction = document.getElementById("instruction");
 const logo = document.getElementById("logo");
 const score = document.getElementById("score");
+const highScoreText = document.getElementById("highScore");
 
 const gridSize = 20;
 let snake = [{ x: 10, y: 10 }];
 let food = generateFood();
+let highScore = 0;
 let direction = "right";
 let gameInterval;
 let gameSpeedDelay = 200;
@@ -153,6 +155,8 @@ function checkCollision() {
 }
 
 function resetGame() {
+  updateHighScore();
+  stopGame();
   snake = [{ x: 10, y: 10 }];
   food = generateFood();
   direction = "right";
@@ -163,4 +167,20 @@ function resetGame() {
 function updateScore() {
   const currentScore = snake.length - 1;
   score.textContent = currentScore.toString().padStart(3, "0");
+}
+
+function updateHighScore() {
+  const currentScore = snake.length - 1;
+  if (currentScore > highScore) {
+    highScore = currentScore;
+    highScoreText.textContent = highScore.toString().padStart(3, "0");
+  }
+  highScoreText.style.display = "block";
+}
+
+function stopGame() {
+  clearInterval(gameInterval);
+  gameStarted = false;
+  instruction.style.display = "block";
+  logo.style.display = "block";
 }
