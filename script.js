@@ -88,11 +88,6 @@ function move() {
   }
 }
 
-// setInterval(() => {
-//   move();
-//   draw();
-// }, 200);
-
 function startGame() {
   gameStarted = true;
   instruction.style.display = "none";
